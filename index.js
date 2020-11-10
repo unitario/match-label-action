@@ -1,12 +1,15 @@
 const core = require('@actions/core')
-const {context} = require('@actions/github')
+const github = require('@actions/github')
 const match = require('./match')
 
 function run() {
   try {
+    const context = github.context
     const pr = context.payload.pull_request || {}
     const labels = pr.labels || []
-    const labelNames = labels.map(label => label.name)
+    core.debug(`PR: ${JSON.stringify(pr)}`)
+
+    const labelNames = labels.map((label) => label.name)
     const allowedLabels = match.parseAllowed(core.getInput('allowed'))
     const allowedMultipleLabels = match.parseAllowed(
       core.getInput('allowed_multiple')

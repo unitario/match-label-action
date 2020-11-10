@@ -1,17 +1,21 @@
 function parseAllowed(allowed) {
-  return allowed.split(/\r?\n/).reduce(
-    (labels, line) =>
-      labels
-        .concat(line.split(/,\s*/))
-        .filter(label => label)
-        .map(label => label.trim()),
-    []
-  )
+  const labels = []
+  const lines = allowed.split(/\r?\n/)
+  for (const line of lines) {
+    labels.push(
+      ...line
+        .split(/,\s*/)
+        .filter((label) => label)
+        .map((label) => label.trim())
+    )
+  }
+
+  return labels
 }
 
 function findMatching(labelNames, allowedLabels, isMultipleAllowed) {
   const allowedLabelsSet = new Set(allowedLabels)
-  const matchingLabels = labelNames.filter(labelName =>
+  const matchingLabels = labelNames.filter((labelName) =>
     allowedLabelsSet.has(labelName)
   )
   if (
