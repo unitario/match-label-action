@@ -7,6 +7,8 @@ function run() {
     const pr = context.payload.pull_request || {}
     const labels = pr.labels || []
     const labelNames = labels.map(label => label.name)
+    core.debug(`INPUT: ${core.getInput('allowed')}`)
+    core.debug(`PARSED INPUT: ${match.parseAllowed(core.getInput('allowed'))}`)
     const allowedLabels = match.parseAllowed(core.getInput('allowed'))
     const allowedMultipleLabels = match.parseAllowed(
       core.getInput('allowed_multiple')

@@ -12,7 +12,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: hmarr/debug-action@v2
     - uses: actions/checkout@v1
     - run: npm ci
     - run: npm test
@@ -20,7 +19,4 @@ jobs:
       if: github.event_name == 'pull_request'
       uses: ./
       with:
-        allowed: >
-          major
-          minor
-          patch
+        allowed: pass-test
